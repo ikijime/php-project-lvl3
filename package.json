@@ -1,7 +1,7 @@
 {
     "private": true,
     "scripts": {
-        "heroku-postbuild": "npm run prod",
+        "heroku-postbuild": "npm run production",
         "dev": "npm run development",
         "development": "mix",
         "watch": "mix watch",
