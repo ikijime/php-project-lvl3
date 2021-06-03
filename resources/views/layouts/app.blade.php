@@ -23,7 +23,7 @@
     <div id="app">
         <header class="flex-shrink-0">
             <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-                <a class="navbar-brand" href="https://php-page-analyzer.herokuapp.com">Анализатор страниц</a>
+                <a class="navbar-brand" href="/">Анализатор страниц</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -31,10 +31,10 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" href="https://php-page-analyzer.herokuapp.com">Главная</a>
+                            <a class="nav-link active" href="/">Главная</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " href="https://php-page-analyzer.herokuapp.com/urls">Сайты</a>
+                            <a class="nav-link " href="/urls">Сайты</a>
                         </li>
                     </ul>
 
@@ -77,6 +77,13 @@
             </nav>
         </header>
         @yield('content')
+        <footer class="border-top py-3 mt-5 flex-shrink-0">
+            <div class="container-lg">
+                <div class="text-center">
+                    <a href="https://hexlet.io/pages/about" target="_blank">Hexlet</a>
+                </div>
+            </div>
+        </footer>
     </div>
 </body>
 </html>
