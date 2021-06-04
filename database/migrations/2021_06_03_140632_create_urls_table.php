@@ -19,7 +19,6 @@ class CreateUrlsTable extends Migration
         Schema::create('urls', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->timestamp('last_check_at')->nullable();
             $table->integer('response_code');
             $table->timestamps();
         });

@@ -36,7 +36,14 @@ class UrlController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $link = $request->url;
+        DB::table('urls')->insert([
+            'name' => $link['name'],
+            'response_code' => 222,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        return redirect('urls');
     }
 
     /**
@@ -47,7 +54,9 @@ class UrlController extends Controller
      */
     public function show($id)
     {
-        //
+        $url = DB::table('urls')->where('id', $id)->first();
+        //dd($url);
+        return view('url', ['url' => $url, 'checks' => array()]);
     }
 
     /**

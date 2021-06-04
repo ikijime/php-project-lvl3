@@ -2,6 +2,8 @@
 
 // use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UrlController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,5 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Auth::routes();
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/urls', [App\Http\Controllers\UrlController::class, 'index'])->name('urls');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/urls', [UrlController::class, 'index'])->name('urls');
+Route::post('/urls', [UrlController::class, 'store']);
+Route::get('/urls/{id}', [UrlController::class, 'show']);
