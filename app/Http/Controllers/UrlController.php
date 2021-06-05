@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Url;
 
 class UrlController extends Controller
 {
@@ -36,9 +37,24 @@ class UrlController extends Controller
      */
     public function store(Request $request)
     {
-        $link = $request->url;
+        
+        $validated = $request->validate([
+            'url.name' => 'required|max:255',
+        ]);
+
+        $newUrl = $request->url;
+        
+        // If url already in database redirect to it
+        // Else insert new row and show /urls
+
+        $oldUrl = DB::table('urls')->where('name', $newUrl['name'])->first();
+
+        if ($oldUrl !== null) {
+            return redirect('urls/' . $oldUrl->id);
+        }
+
         DB::table('urls')->insert([
-            'name' => $link['name'],
+            'name' => $newUrl['name'],
             'response_code' => 222,
             'created_at' => now(),
             'updated_at' => now(),
@@ -55,7 +71,6 @@ class UrlController extends Controller
     public function show($id)
     {
         $url = DB::table('urls')->where('id', $id)->first();
-        //dd($url);
         return view('url', ['url' => $url, 'checks' => array()]);
     }
 
