@@ -22,6 +22,7 @@
             </tr>
             @endforeach
             </table>
+            {{ $urls->links() }}
         </div>
     </div>
 
