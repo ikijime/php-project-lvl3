@@ -43,18 +43,26 @@ class UrlController extends Controller
         ]);
 
         $newUrl = $request->url;
-        
+        $parsedUrl = parse_url($request->url['name']);
+
+        if (isset($parsedUrl['scheme']) && isset($parsedUrl['host']))
+        {
+            $newUrlName = $parsedUrl['scheme'] . "://" . $parsedUrl['host'];
+        }
+
+        $newUrlName = 'http://' . $parsedUrl['path'];
+
         // If url already in database redirect to it
         // Else insert new row and show /urls
 
-        $oldUrl = DB::table('urls')->where('name', $newUrl['name'])->first();
+        $oldUrl = DB::table('urls')->where('name', $newUrlName)->first();
 
         if ($oldUrl !== null) {
             return redirect('urls/' . $oldUrl->id);
         }
 
         DB::table('urls')->insert([
-            'name' => $newUrl['name'],
+            'name' => $newUrlName,
             'response_code' => 222,
             'created_at' => now(),
             'updated_at' => now(),
