@@ -48,9 +48,11 @@ class UrlController extends Controller
         if (isset($parsedUrl['scheme']) && isset($parsedUrl['host']))
         {
             $newUrlName = $parsedUrl['scheme'] . "://" . $parsedUrl['host'];
+        } else {
+            $newUrlName = 'http://' . $parsedUrl['path'];
         }
 
-        $newUrlName = 'http://' . $parsedUrl['path'];
+        
 
         // If url already in database redirect to it
         // Else insert new row and show /urls
@@ -63,7 +65,8 @@ class UrlController extends Controller
 
         DB::table('urls')->insert([
             'name' => $newUrlName,
-            'response_code' => 222,
+            // ----- !!! ----------
+            'response_code' => 200,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

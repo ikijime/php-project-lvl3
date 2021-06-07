@@ -18,6 +18,7 @@ use App\Http\Controllers\HomeController;
 
 // Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/urls', [UrlController::class, 'index'])->name('urls');
-Route::post('/urls', [UrlController::class, 'store']);
-Route::get('/urls/{id}', [UrlController::class, 'show']);
+
+Route::resources([
+    'urls' => UrlController::class,
+]);
