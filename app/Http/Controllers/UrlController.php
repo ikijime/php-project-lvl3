@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Url;
 
 class UrlController extends Controller
 {
@@ -64,8 +65,8 @@ class UrlController extends Controller
 
         DB::table('urls')->insert([
             'name' => $newUrlName,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
         flash('Новая запись добавлена');
         return redirect('urls');
