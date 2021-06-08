@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Faker\Generator;
+use App\Models\Check;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -33,12 +34,21 @@ class UrlSeeder extends Seeder
         {
             $urlData[] = [
                 'name' => $this->faker->url(),
-                'response_code' => $this->faker->randomNumber(3),
+                'created_at' => now(),
+                'updated_at' => now(),
             ];
         }
 
         foreach ($urlData as $url) {
             DB::table('urls')->insert($url);
         }
+
+        Check::factory()->count(6)->create([
+            'url_id' => 1,
+        ]);
+
+        Check::factory()->count(3)->create([
+            'url_id' => 2,
+        ]);
     }
 }

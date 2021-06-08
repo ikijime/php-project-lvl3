@@ -24,7 +24,6 @@ class UrlFactory extends Factory
     {
         return [
             'name' => $this->faker->url(),
-            'response_code' => $this->faker->randomNumber(),
         ];
     }
 }

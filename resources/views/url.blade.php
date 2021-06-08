@@ -25,14 +25,14 @@
             </table>
         </div>
         <h2 class="mt-5 mb-3">Проверки</h2>
-
         <form method="post" action="{{ $url->id }}/checks">
             @csrf
             <input type="submit" class="btn btn-primary" value="Запустить проверку">
+            <input name="urlid" type="hidden" value="{{ $url->id }}">
         </form>
         <table class="table table-bordered table-hover text-nowrap">
             <tr>
-                <th>ID</th>
+                <th >ID</th>
                 <th>Код ответа</th>
                 <th>h1</th>
                 <th>keywords</th>
@@ -41,12 +41,12 @@
             </tr>
             @foreach ($checks as $check)
             <tr>
-                <th>{{ $checks->id }}</th>
-                <th>{{ $checks->response_code }}</a></th>
-                <th>{{ $checks->h1 }}</th>
-                <th>{{ $checks->keywords }}</th>
-                <th>{{ $checks->description }}</th>
-                <th>{{ $checks->created_at }}</th>
+                <th>{{ $check->id }}</th>
+                <th>{{ $check->status_code }}</a></th>
+                <th>{{ $check->h1 }}</th>
+                <th>{{ $check->keywords }}</th>
+                <th>{{ $check->description }}</th>
+                <th>{{ $check->created_at }}</th>
             </tr>
             @endforeach
         </table>

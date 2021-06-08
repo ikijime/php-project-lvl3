@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Check;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Url extends Model
+class Check extends Model
 {
     use HasFactory;
 
@@ -15,7 +14,7 @@ class Url extends Model
      *
      * @var string
      */
-    protected $table = 'urls';
+    protected $table = 'url_checks';
 
     /**
      * The primary key associated with the table.
@@ -26,11 +25,6 @@ class Url extends Model
     
     public function run()
     {
-        Url::factory()->create();
-    }
-
-    public function checks()
-    {
-        return $this->hasMany(Check::class);
+        Check::factory()->create();
     }
 }

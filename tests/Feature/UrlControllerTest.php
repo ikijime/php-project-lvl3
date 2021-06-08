@@ -5,8 +5,6 @@ namespace Tests\Feature;
 use App\Models\Url;
 use Tests\TestCase;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UrlControllerTest extends TestCase
 {
@@ -37,7 +35,6 @@ class UrlControllerTest extends TestCase
         $url = DB::table('urls')->first();
 
         $this->assertEquals($expectedUrl, $url->name);
-        $this->assertEquals(200, $url->response_code);
     }
 
     public function urlProvider(): mixed
@@ -62,6 +59,7 @@ class UrlControllerTest extends TestCase
         }
         $expects = DB::table('urls')->count();
         $this->assertEquals(11, $expects);
+        $response->assertRedirect();
     }
 
     protected function tearDown(): void

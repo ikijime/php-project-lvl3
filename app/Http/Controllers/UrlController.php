@@ -37,7 +37,6 @@ class UrlController extends Controller
      */
     public function store(Request $request)
     {
-        
         $validated = $request->validate([
             'url.name' => 'required|max:255',
         ]);
@@ -65,11 +64,10 @@ class UrlController extends Controller
 
         DB::table('urls')->insert([
             'name' => $newUrlName,
-            // ----- !!! ----------
-            'response_code' => 200,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        flash('Новая запись добавлена');
         return redirect('urls');
     }
 
@@ -82,7 +80,8 @@ class UrlController extends Controller
     public function show($id)
     {
         $url = DB::table('urls')->where('id', $id)->first();
-        return view('url', ['url' => $url, 'checks' => array()]);
+        $urlChecks = DB::table('url_checks')->where('url_id', $id)->get();
+        return view('url', ['url' => $url, 'checks' => $urlChecks]);
     }
 
     /**

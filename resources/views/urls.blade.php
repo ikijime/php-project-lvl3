@@ -2,6 +2,7 @@
 
 @section('content')
 <main class="flex-grow-1">
+    @include('flash::message')
     <div class="container-lg">
     <h1 class="mt-5 mb-3">Сайты</h1>
         <div class="table-responsive">
@@ -18,7 +19,7 @@
                 <th>{{ $url->id }}</th>
                 <th><a href="/urls/{{$url->id}}">{{ $url->name }}</a></th>
                 <th>{{ $url->updated_at }}</th>
-                <th>{{ $url->response_code }}</th>
+                <th>'Get last status code'</th>
             </tr>
             @endforeach
             </table>

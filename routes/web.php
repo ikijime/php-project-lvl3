@@ -1,6 +1,8 @@
 <?php
 
 // use Illuminate\Support\Facades\Auth;
+
+use App\Http\Controllers\CheckController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UrlController;
 use App\Http\Controllers\HomeController;
@@ -19,6 +21,9 @@ use App\Http\Controllers\HomeController;
 // Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+
 Route::resources([
     'urls' => UrlController::class,
 ]);
+
+Route::post('/urls/{id}/checks', [CheckController::class, 'check']);
