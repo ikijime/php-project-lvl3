@@ -26,6 +26,5 @@
             {{ $urls->links() }}
         </div>
     </div>
-
 </main>
 @endsection

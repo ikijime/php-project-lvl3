@@ -42,10 +42,10 @@
             @foreach ($checks as $check)
             <tr>
                 <th>{{ $check->id }}</th>
-                <th>{{ $check->status_code }}</a></th>
-                <th>{{ $check->h1 }}</th>
-                <th>{{ $check->keywords }}</th>
-                <th>{{ $check->description }}</th>
+                <th>{{ \Illuminate\Support\Str::limit($check->status_code, 3) }}</a></th>
+                <th>{{ \Illuminate\Support\Str::limit($check->h1, 10) }}</th>
+                <th>{{ \Illuminate\Support\Str::limit($check->keywords, 10) }}</th>
+                <th>{{ \Illuminate\Support\Str::limit($check->description, 50) }}</th>
                 <th>{{ $check->created_at }}</th>
             </tr>
             @endforeach
