@@ -11,7 +11,21 @@ class UrlController extends Controller
 {
     public function index(): mixed {
         $urls = DB::table('urls')->paginate(15);
-        return view('urls', ['urls' => $urls]);
+
+        $lastChecks = DB::table('url_checks')
+            ->select('url_id', 'created_at', 'status_code')
+            ->whereIn('url_id', $urls->pluck('id'))
+            ->orderByDesc('url_id')
+            ->orderByDesc('created_at')
+            ->distinct('url_id')->get()->toArray();
+        
+        $checks = [];
+
+        foreach($lastChecks as $lastCheck) {
+            $checks[$lastCheck->url_id] = $lastCheck;
+        }
+
+        return view('urls', ['urls' => $urls, 'checks' => $checks]);
     }
 
     public function create()
@@ -62,7 +76,7 @@ class UrlController extends Controller
 
         if ($oldUrl !== null) {
             flash("Домен {$oldUrl->name} уже проверялся.");
-            return redirect('urls/' . $oldUrl->id);
+            return redirect(route('urls.show', $oldUrl->id ));
         }
 
         DB::table('urls')->insert([

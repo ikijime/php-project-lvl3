@@ -18,8 +18,8 @@
             <tr>
                 <th>{{ $url->id }}</th>
                 <th><a href="/urls/{{$url->id}}">{{ $url->name }}</a></th>
-                <th>{{ $url->updated_at }}</th>
-                <th>'Get last status code'</th>
+                <th>{{ $url->updated_at ?? null }}</th>
+                <th>{{ $checks[$url->id]->status_code ?? null }}</th>
             </tr>
             @endforeach
             </table>
