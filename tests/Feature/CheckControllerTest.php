@@ -39,6 +39,7 @@ class CheckControllerTest extends TestCase
         $expected = [
             'url_id' => $this->url['id'],
             'status_code' => 200,
+            'h1' => 'TEST H1',
         ];
 
         $response = $this->post("/urls/1/checks", ['urlid' => 1]);

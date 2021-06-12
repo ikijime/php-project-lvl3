@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use DiDom\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -27,16 +28,26 @@ class CheckController extends Controller
                 return redirect("/urls/" . $request->urlid);
             }
         
+
         $url_id = $request->urlid;
-        $html = $response->body();
         $status = $response->status();
+
+        $document = new Document($response->body());
+
+        $keywords =  $document->has('meta[name=keywords]') ?
+                     $document->find('meta[name=keywords]')[0]->getAttribute('content') : "not found";
+
+        $description = $document->has('meta[name=description]') ?
+                        $document->find('meta[name=description]')[0]->getAttribute('content') : "not found";
+                        
+        $h1Tag = $document->has('h1') ? $document->find('h1')[0]->text() : "not found";
 
         DB::table('url_checks')->insert([
             'url_id' => $request->urlid,
             'status_code' => $status,
-            // 'h1' => 'Header One11',
-            // 'keywords' => 'Some keywords',
-            // 'description' => 'Some description',
+            'h1' => $h1Tag,
+            'keywords' => $keywords,
+            'description' => $description,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
