@@ -2,7 +2,9 @@
 
 @section('content')
 <main class="flex-grow-1">
+    @include('flash::message')
     <div class="container-lg">
+
         <h1 class="mt-5 mb-3">Сайт: {{ $url->name}}</h1>
         <div class="table-responsive">
             <table class="table table-bordered table-hover text-nowrap">

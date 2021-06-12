@@ -26,4 +26,5 @@ Route::resources([
     'urls' => UrlController::class,
 ]);
 
-Route::post('/urls/{id}/checks', [CheckController::class, 'check']);
+Route::post('/urls/{id}/checks', [CheckController::class, 'store'])->name('check.store');
+Route::get('/urls/{id}/checks', [CheckController::class, 'index']);

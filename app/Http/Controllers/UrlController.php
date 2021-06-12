@@ -38,7 +38,7 @@ class UrlController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'url.name' => 'required|max:255',
         ]);
 
@@ -47,12 +47,24 @@ class UrlController extends Controller
 
         if (isset($parsedUrl['scheme']) && isset($parsedUrl['host']))
         {
-            $newUrlName = $parsedUrl['scheme'] . "://" . $parsedUrl['host'];
+             $newUrlName = $parsedUrl['scheme'] . "://" . $parsedUrl['host'];
         } else {
-            $newUrlName = 'http://' . $parsedUrl['path'];
+             $newUrlName = 'http://' . $parsedUrl['path'];
         }
 
+        // $valideteUrl = function ($url) {
+        //     $path = parse_url($url, PHP_URL_PATH);
+        //     $encoded_path = array_map('urlencode', explode('/', $path));
+        //     $url = str_replace($path, implode('/', $encoded_path), $url);
         
+        //     return filter_var($url, FILTER_VALIDATE_URL) ? true : false;
+        // };
+
+        // if ($valideteUrl($request->url['name'])) {
+        //     $newUrlName = $request->url['name'];
+        // } else {
+        //     return redirect()->back()->withErrors(['Url not valid.']);
+        // }
 
         // If url already in database redirect to it
         // Else insert new row and show /urls
@@ -60,6 +72,7 @@ class UrlController extends Controller
         $oldUrl = DB::table('urls')->where('name', $newUrlName)->first();
 
         if ($oldUrl !== null) {
+            flash("Домен {$oldUrl->name} уже проверялся.");
             return redirect('urls/' . $oldUrl->id);
         }
 

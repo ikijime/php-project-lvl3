@@ -4,27 +4,47 @@ namespace Tests\Feature\Feature;
 
 use App\Models\Url;
 use Tests\TestCase;
-use App\Models\Check;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
 
 class CheckControllerTest extends TestCase
 {
+    //protected $url;
+
     protected function setUp(): void
     {
         parent::setUp();
-        Url::factory()->count(2)->make();
+        $this->url['name'] = 'http://example.com';
+        DB::table('urls')->insert($this->url);
+        $this->url['id'] = DB::table('urls')->where('name', $this->url['name'])->value('id');
     }
 
     public function testChecksStoreAndShow()
     {
-        Check::factory()->count(6)->create([
-            'url_id' => 2,
+        $html = '<html>
+                    <head>
+                        <meta name="keywords" content="Test Keywords">
+                        <meta name="description" content="Test Description">
+                        <title>TEST TITLE</title>
+                    </head>
+                    <body><h1>TEST H1</h1></body>
+                </html>';
+
+        Http::fake([
+            $this->url['name'] => Http::response($html, 200)
         ]);
 
-        $checks = DB::table('url_checks')->count();
-        $this->assertEquals(6, $checks);
+        $expected = [
+            'url_id' => $this->url['id'],
+            'status_code' => 200,
+        ];
+
+        $response = $this->post("/urls/1/checks", ['urlid' => 1]);
+        $response->assertStatus(302);
+        $response->assertSessionHasNoErrors();
+        $this->assertDatabaseHas('url_checks', $expected);
     }
 
     protected function tearDown(): void
