@@ -23,7 +23,7 @@ class Check extends Model
      */
     protected $primaryKey = 'id';
     
-    public function run()
+    public function run(): void
     {
         Check::factory()->create();
     }

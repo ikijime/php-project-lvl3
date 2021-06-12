@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Check;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Url extends Model
 {
@@ -24,12 +25,12 @@ class Url extends Model
      */
     protected $primaryKey = 'id';
     
-    public function run()
+    public function run(): void
     {
         Url::factory()->create();
     }
 
-    public function checks()
+    public function checks(): HasMany
     {
         return $this->hasMany(Check::class);
     }

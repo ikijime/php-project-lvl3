@@ -41,9 +41,10 @@
         }
     },
     "scripts": {
-        "phpcs": "phpcs",
+        "phpcs": "composer exec --verbose phpcs -- --standard=PSR12 app",
         "phpcbf": "phpcbf",
         "phpstan": "composer exec --verbose phpstan -- --level=6 analyse app tests",
+        "test-coverage": "composer exec --verbose phpunit tests -- --coverage-clover build/logs/clover.xml",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

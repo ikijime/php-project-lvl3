@@ -2,9 +2,9 @@
 
 // use Illuminate\Support\Facades\Auth;
 
-use App\Http\Controllers\CheckController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UrlController;
+use App\Http\Controllers\UrlCheckController;
 use App\Http\Controllers\HomeController;
 
 /*
@@ -26,5 +26,5 @@ Route::resources([
     'urls' => UrlController::class,
 ]);
 
-Route::post('/urls/{id}/checks', [CheckController::class, 'store'])->name('check.store');
-Route::get('/urls/{id}/checks', [CheckController::class, 'index']);
+Route::post('/urls/{id}/checks', [UrlCheckController::class, 'store'])->name('url_check.store');
+Route::get('/urls/{id}/checks', [UrlCheckController::class, 'index']);

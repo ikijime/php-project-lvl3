@@ -2,16 +2,13 @@
 
 namespace Tests\Feature\Feature;
 
-use App\Models\Url;
 use Tests\TestCase;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 
 class CheckControllerTest extends TestCase
 {
-    //protected $url;
+    protected array $url;
 
     protected function setUp(): void
     {
@@ -21,7 +18,7 @@ class CheckControllerTest extends TestCase
         $this->url['id'] = DB::table('urls')->where('name', $this->url['name'])->value('id');
     }
 
-    public function testChecksStoreAndShow()
+    public function testChecksStoreAndShow(): void
     {
         $html = '<html>
                     <head>

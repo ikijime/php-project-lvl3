@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Url;
+use Composer\Util\Http\Response;
 use Tests\TestCase;
 use Illuminate\Support\Facades\DB;
 
@@ -13,16 +14,16 @@ class UrlControllerTest extends TestCase
         parent::setUp();
     }
 
-    public function testUrlsPageLoading()
+    public function testUrlsPageLoading(): void
     {
         $response = $this->get(route('urls.index'));
         $response->assertStatus(200);
     }
 
     /**
-    * @dataProvider urlProvider
-    */
-    public function testUrlStoring($url, $expectedUrl):void
+     * @dataProvider urlProvider
+     */
+    public function testUrlStoring(string $url, string $expectedUrl): void
     {
         $response = $this->post('/urls', [
             'url' => [
@@ -46,8 +47,8 @@ class UrlControllerTest extends TestCase
             'Without path & schema' => ['withoutschema.com', 'http://withoutschema.com'],
         ];
     }
-    
-    public function testUrlHasRecords()
+
+    public function testUrlHasRecords(): void
     {
         $urls = Url::factory()->count(11)->make();
         foreach ($urls as $url) {
