@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class UrlController extends Controller
 {
@@ -34,11 +34,17 @@ class UrlController extends Controller
     }
 
     public function store(Request $request): mixed
-    {
-        $request->validate([
-            'url.name' => 'required|url|max:255',
+    {   
+        $validator = Validator::make($request->url, [
+            'name' => 'required|url'
         ]);
 
+        if ($validator->fails()) {
+            flash('Not a valid url')->error()->important();
+            return redirect()->back()->withErrors($validator);
+        }
+
+        
         $parsedUrl = parse_url($request->url['name']);
 
         if (isset($parsedUrl['scheme']) && isset($parsedUrl['host']))

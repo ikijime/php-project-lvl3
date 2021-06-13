@@ -28,7 +28,9 @@ class UrlControllerTest extends TestCase
             ]
         ]);
 
-        $response->assertSessionHasErrors();
+        $data = session()->all();
+        dump($data);
+        $response->assertSessionHasErrors('name');
     }
     /**
      * @dataProvider urlProvider
