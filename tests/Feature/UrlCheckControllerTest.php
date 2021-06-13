@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Feature\Feature;
+namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
-class CheckControllerTest extends TestCase
+class UrlCheckControllerTest extends TestCase
 {
     protected array $url;
 
