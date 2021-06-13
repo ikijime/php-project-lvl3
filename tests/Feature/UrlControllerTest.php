@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
+
 use App\Models\Url;
-use Composer\Util\Http\Response;
 use Tests\TestCase;
 use Illuminate\Support\Facades\DB;
 
@@ -20,6 +20,16 @@ class UrlControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function testEmptyInputError():void
+    {
+        $response = $this->post('/urls', [
+            'url' => [
+                'name' => ''
+            ]
+        ]);
+
+        $response->assertSessionHasErrors();
+    }
     /**
      * @dataProvider urlProvider
      */
@@ -43,14 +53,12 @@ class UrlControllerTest extends TestCase
         return [
             'Full link' => ['https://www.fullurl.com/12', 'https://www.fullurl.com'],
             'Without path' => ['https://www.full.com', 'https://www.full.com'],
-            'Without schema' => ['www.withoutschema.com', 'http://www.withoutschema.com'],
-            'Without path & schema' => ['withoutschema.com', 'http://withoutschema.com'],
         ];
     }
 
     public function testUrlHasRecords(): void
     {
-        $urls = Url::factory()->count(11)->make();
+        $urls = Url::factory()->count(10)->make();
         foreach ($urls as $url) {
             $response = $this->post('/urls', [
                 'url' => [
@@ -59,7 +67,7 @@ class UrlControllerTest extends TestCase
             ]);
         }
         $expects = DB::table('urls')->count();
-        $this->assertEquals(11, $expects);
+        $this->assertEquals(10, $expects);
         $response->assertRedirect();
     }
 
