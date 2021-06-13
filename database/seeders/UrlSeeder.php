@@ -22,7 +22,7 @@ class UrlSeeder extends Seeder
     {
         return Container::getInstance()->make(Generator::class);
     }
-    
+
     /**
      * Run the database seeds.
      *
@@ -30,8 +30,7 @@ class UrlSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i <= 100;  $i++)
-        {
+        for ($i = 0; $i <= 100; $i++) {
             $urlData[] = [
                 'name' => $this->faker->url(),
                 'created_at' => now(),

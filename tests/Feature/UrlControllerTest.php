@@ -2,13 +2,16 @@
 
 namespace Tests\Feature;
 
-
 use App\Models\Url;
+use Composer\Util\Http\Response;
 use Tests\TestCase;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UrlControllerTest extends TestCase
 {
+    use RefreshDatabase;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -20,7 +23,7 @@ class UrlControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function testEmptyInputError():void
+    public function testEmptyInputError(): void
     {
         $response = $this->post('/urls', [
             'url' => [
@@ -28,18 +31,16 @@ class UrlControllerTest extends TestCase
             ]
         ]);
 
-        $data = session()->all();
-        dump($data);
         $response->assertSessionHasErrors('name');
     }
     /**
      * @dataProvider urlProvider
      */
-    public function testUrlStoring(string $url, string $expectedUrl): void
+    public function testUrlStoring(string $urlName, string $expectedUrl): void
     {
         $response = $this->post('/urls', [
             'url' => [
-                'name' => $url
+                'name' => $urlName
             ]
         ]);
 
@@ -47,7 +48,9 @@ class UrlControllerTest extends TestCase
 
         $url = DB::table('urls')->first();
 
-        $this->assertEquals($expectedUrl, $url->name);
+        if (isset($url->name)) {
+            $this::assertEquals($expectedUrl, $url->name);
+        }
     }
 
     public function urlProvider(): mixed
@@ -61,16 +64,16 @@ class UrlControllerTest extends TestCase
     public function testUrlHasRecords(): void
     {
         $urls = Url::factory()->count(10)->make();
+
         foreach ($urls as $url) {
-            $response = $this->post('/urls', [
+            $res = $this->post('/urls', [
                 'url' => [
                     'name' => $url->name
                 ]
             ]);
         }
         $expects = DB::table('urls')->count();
-        $this->assertEquals(10, $expects);
-        $response->assertRedirect();
+        $this::assertEquals(10, $expects);
     }
 
     protected function tearDown(): void

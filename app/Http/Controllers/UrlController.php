@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Validator;
 
 class UrlController extends Controller
 {
-    public function index(): mixed {
+    public function index(): mixed
+    {
         $urls = DB::table('urls')->paginate(15);
 
         $lastChecks = DB::table('url_checks')
@@ -18,47 +19,49 @@ class UrlController extends Controller
             ->orderByDesc('url_id')
             ->orderByDesc('created_at')
             ->distinct('url_id')->get()->toArray();
-        
+
         $checks = [];
 
-        foreach($lastChecks as $lastCheck) {
+        foreach ($lastChecks as $lastCheck) {
             $checks[$lastCheck->url_id] = $lastCheck;
         }
 
         return view('urls', ['urls' => $urls, 'checks' => $checks]);
     }
 
-    public function create()
+    public function create(): void
     {
         //
     }
 
     public function store(Request $request): mixed
-    {   
+    {
+        if (!isset($request->url)) {
+            return null;
+        }
+
         $validator = Validator::make($request->url, [
             'name' => 'required|url'
         ]);
 
-        if ($validator->fails()) {
+        if ($validator->fails() || !isset($request->url)) {
             flash('Not a valid url')->error()->important();
             return redirect()->back()->withErrors($validator);
         }
 
-        
         $parsedUrl = parse_url($request->url['name']);
 
-        if (isset($parsedUrl['scheme']) && isset($parsedUrl['host']))
-        {
+        if (isset($parsedUrl['scheme']) && isset($parsedUrl['host'])) {
              $newUrlName = $parsedUrl['scheme'] . "://" . $parsedUrl['host'];
         } else {
              $newUrlName = 'http://' . $parsedUrl['path'];
         }
-        
+
         $oldUrl = DB::table('urls')->where('name', $newUrlName)->first();
 
-        if ($oldUrl !== null) {
+        if (isset($oldUrl->id) && isset($oldUrl->name)) {
             flash("Домен {$oldUrl->name} уже проверялся.");
-            return redirect(route('urls.show', $oldUrl->id ));
+            return redirect(route('urls.show', $oldUrl->id));
         }
 
         DB::table('urls')->insert([
@@ -70,37 +73,24 @@ class UrlController extends Controller
         return redirect('urls');
     }
 
-    public function show($id)
+    public function show(int $id): mixed
     {
         $url = DB::table('urls')->where('id', $id)->first();
         $urlChecks = DB::table('url_checks')->where('url_id', $id)->get();
         return view('url', ['url' => $url, 'checks' => $urlChecks]);
     }
 
-    public function edit(int $id)
+    public function edit(int $id): void
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): void
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(int $id): void
     {
         //
     }

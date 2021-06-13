@@ -41,7 +41,7 @@
         }
     },
     "scripts": {
-        "phpcs": "phpcs",
+        "phpcs": "phpcs app",
         "phpcbf": "phpcbf --standard=PSR12",
         "phpstan": "composer exec --verbose phpstan -- --level=6 analyse app tests",
         "test": "composer exec --verbose phpunit tests",

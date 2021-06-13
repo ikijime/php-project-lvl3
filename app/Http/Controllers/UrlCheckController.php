@@ -17,6 +17,12 @@ class UrlCheckController extends Controller
     public function store(int $id): RedirectResponse
     {
         $urlRecord = DB::table('urls')->where('id', $id)->first();
+
+        if (!isset($urlRecord->name)) {
+            flash('Something went wrong')->error();
+            return redirect("/urls/" . $id);
+        }
+
         try {
             $response = Http::timeout(3)->get($urlRecord->name);
         } catch (\Exception $e) {

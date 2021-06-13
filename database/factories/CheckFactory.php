@@ -12,8 +12,8 @@ class CheckFactory extends Factory
     public function definition()
     {
         return [
-            'url_id' => $this->faker->numberBetween(0,100),
-            'status_code' => $this->faker->numberBetween(0,600),
+            'url_id' => $this->faker->numberBetween(0, 100),
+            'status_code' => $this->faker->numberBetween(0, 600),
             'h1' => $this->faker->sentence(5),
             'keywords' => $this->faker->word(),
             'description' => $this->faker->text(),

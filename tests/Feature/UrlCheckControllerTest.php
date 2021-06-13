@@ -39,9 +39,6 @@ class UrlCheckControllerTest extends TestCase
             'h1' => 'TEST H1',
         ];
 
-        //$response = $this->get(route('urls.show', ['id => 1']));
-        //$response->assertSessionHasNoErrors();
-
         $response = $this->post("/urls/1/checks", ['urlid' => 1]);
         $response->assertStatus(302);
         $response->assertSessionHasNoErrors();
