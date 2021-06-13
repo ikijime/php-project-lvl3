@@ -41,6 +41,7 @@ class UrlCheckController extends Controller
         $description = $document->has('meta[name=description]') ?
                         $document->find('meta[name=description]')[0]->getAttribute('content') : "not found";
 
+        /* @phpstan-ignore-next-line */
         $h1Tag = $document->has('h1') ? $document->find('h1')[0]->text() : "not found";
 
         DB::table('url_checks')->insert([

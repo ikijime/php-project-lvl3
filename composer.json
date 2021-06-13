@@ -44,7 +44,6 @@
         "phpcs": "phpcs app",
         "phpcbf": "phpcbf --standard=PSR12",
         "phpstan": "composer exec --verbose phpstan -- --level=6 analyse app tests",
-        "test": "composer exec --verbose phpunit tests",
         "test-coverage": [
             "@putenv XDEBUG_MODE=coverage",
             "composer exec --verbose phpunit tests -- --coverage-clover build/logs/clover.xml"
