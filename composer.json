@@ -41,8 +41,8 @@
         }
     },
     "scripts": {
-        "phpcs": "composer exec --verbose phpcs -- --standard=PSR12 app",
-        "phpcbf": "phpcbf",
+        "phpcs": "composer exec --verbose phpcs -- --standard=PSR12",
+        "phpcbf": "phpcbf --standard=PSR12",
         "phpstan": "composer exec --verbose phpstan -- --level=6 analyse app tests",
         "test-coverage": "composer exec --verbose phpunit tests -- --coverage-clover build/logs/clover.xml",
         "post-autoload-dump": [

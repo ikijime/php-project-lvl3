@@ -34,12 +34,12 @@
         </form>
         <table class="table table-bordered table-hover text-nowrap">
             <tr>
-                <th >ID</th>
+                <th>ID</th>
                 <th>Код ответа</th>
                 <th>h1</th>
                 <th>keywords</th>
                 <th>description</th>
-                <th>Дата создания</th>
+                <th>Последняя проверка</th>
             </tr>
             @foreach ($checks as $check)
             <tr>
@@ -48,7 +48,7 @@
                 <th>{{ \Illuminate\Support\Str::limit($check->h1, 10) }}</th>
                 <th>{{ \Illuminate\Support\Str::limit($check->keywords, 10) }}</th>
                 <th>{{ \Illuminate\Support\Str::limit($check->description, 50) }}</th>
-                <th>{{ $check->created_at }}</th>
+                <th>{{ $check->updated_at }}</th>
             </tr>
             @endforeach
         </table>

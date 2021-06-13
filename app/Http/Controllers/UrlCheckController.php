@@ -19,15 +19,14 @@ class UrlCheckController extends Controller
     public function store(int $id): RedirectResponse
     {
         $urlRecord = DB::table('urls')->where('id', $id)->first();
-            try {
-                $response = Http::timeout(3)->get($urlRecord->name);
-                
-            } catch ( \Exception $e) {
-                $errorMsg = $e->getMessage();
-                flash($errorMsg)->error();
-                return redirect("/urls/" . $id);
-            }
-        
+        try {
+            $response = Http::timeout(3)->get($urlRecord->name);
+        } catch (\Exception $e) {
+            $errorMsg = $e->getMessage();
+            flash($errorMsg)->error();
+            return redirect("/urls/" . $id);
+        }
+
         $status = $response->status();
 
         $document = new Document($response->body());

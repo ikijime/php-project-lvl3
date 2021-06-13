@@ -24,7 +24,7 @@ class Url extends Model
      * @var string
      */
     protected $primaryKey = 'id';
-    
+
     public function run(): void
     {
         Url::factory()->create();
